@@ -1,9 +1,10 @@
 import './style.css'
 
 import Params from "./params.ts"
-import { createCanvas, imageToCanvas, loadImage } from './canvas.ts';
+import { canvasToImage, createAreaCanvas, createCanvas, imageToCanvas, loadImage } from './canvas.ts';
 import { drawArea, drawBackgrounds } from './pixels.ts';
 import { paste } from './perspective.ts';
+import { Font } from './text.ts';
 
 const params: Params = {
   image: "base.png",
@@ -51,7 +52,21 @@ async function main() {
   document.body.appendChild(c);
 
   drawBackgrounds(ctx, params.background)
-  drawArea(ctx, params.areas.lines, ([x, y]) => (x + y) % 3 == 0)
+
+  const a = params.areas.lines;
+  const [areaCanvas, areaCtx] = createAreaCanvas(a);
+  document.body.appendChild(areaCanvas);
+  const font = await Font.load(a.font, a.characterSize);
+  font.drawLines(areaCtx, [0, 0], ["meow", "hehehehe :3"])
+
+  const data = areaCtx.getImageData(0, 0, areaCanvas.width, areaCanvas.height);
+  const getValue = ([x, y]: [number, number]): boolean => {
+    const red = y * areaCanvas.width * 4 + x * 4;
+    console.log(x, y, data.data[red])
+    return data.data[red] < 255;
+  }
+
+  drawArea(ctx, params.areas.lines, getValue);
 
   const targetImage = await loadImage(params.image);
   const [target, targetCtx] = imageToCanvas(targetImage);

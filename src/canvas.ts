@@ -1,3 +1,5 @@
+import { Area } from "./params";
+
 export function createCanvas([width, height]: [number, number]): [HTMLCanvasElement, CanvasRenderingContext2D] {
   const canvas = document.createElement('canvas');
   canvas.width = width;
@@ -8,6 +10,14 @@ export function createCanvas([width, height]: [number, number]): [HTMLCanvasElem
   const ctx = canvas.getContext('2d');
   if (ctx == null) throw new Error("Couldn't obtain canvas rendering context");
   return [canvas, ctx];
+}
+
+export function createAreaCanvas(a: Area): [HTMLCanvasElement, CanvasRenderingContext2D] {
+  const s: [number, number] = [a.size[0] * a.characterSize[0], a.size[1] * a.characterSize[1]]
+  const [c, ctx] = createCanvas(s);
+  ctx.fillStyle = "white"
+  ctx.fillRect(0, 0, ...s);
+  return [c, ctx];
 }
 
 export function loadImage(path: string): Promise<HTMLImageElement> {
