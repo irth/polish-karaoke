@@ -1,15 +1,18 @@
 {
   "name": "karaoke2",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  },
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+  "type": "module",
+  "dependencies": {
+    "perspectivejs": "^1.0.3"
   }
 }

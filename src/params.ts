@@ -1,3 +1,5 @@
+import { Quadrilateral } from "./perspective";
+
 export type Background = {
   box: [number, number, number, number];
   color: string;
@@ -21,12 +23,7 @@ type Params = {
 
   renderArea: [number, number];
 
-  drawArea: {
-    topLeft: [number, number];
-    topRight: [number, number];
-    bottomRight: [number, number];
-    bottomLeft: [number, number];
-  };
+  drawArea: Quadrilateral;
 
   background: Background[];
 

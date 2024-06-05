@@ -1,8 +1,9 @@
 import './style.css'
 
 import Params from "./params.ts"
-import { createCanvas } from './canvas.ts';
+import { createCanvas, imageToCanvas, loadImage } from './canvas.ts';
 import { drawArea, drawBackgrounds } from './pixels.ts';
+import { paste } from './perspective.ts';
 
 const params: Params = {
   image: "base.png",
@@ -45,10 +46,20 @@ const params: Params = {
   },
 }
 
+async function main() {
+  const [c, ctx] = createCanvas(params.renderArea);
+  document.body.appendChild(c);
+
+  drawBackgrounds(ctx, params.background)
+  drawArea(ctx, params.areas.lines, ([x, y]) => (x + y) % 3 == 0)
+
+  const targetImage = await loadImage(params.image);
+  const [target, targetCtx] = imageToCanvas(targetImage);
+
+  paste(targetCtx, c, params.drawArea);
+  document.body.appendChild(target);
+}
+
+main();
 
 
-const [c, ctx] = createCanvas(params.renderArea);
-document.body.appendChild(c);
-
-drawBackgrounds(ctx, params.background)
-drawArea(ctx, params.areas.lines, ([x, y]) => (x + y) % 3 == 0)
