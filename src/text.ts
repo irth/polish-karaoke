@@ -1,50 +1,49 @@
 import { loadImage } from "./canvas";
 
-type Characters = { [ch: string]: number }
+type CharacterSpec = { x: number, w: number }
+type Characters = { [ch: string]: CharacterSpec }
+
+type FontSpec = {
+  image: string,
+  height: number,
+  characters: Characters,
+}
 
 export class Font {
   img: HTMLImageElement
-  chW: number
-  chH: number
+  height: number
   chs: Characters
 
-  constructor(img: HTMLImageElement, [characterWidth, characterHeight]: [number, number], characters: Characters) {
+  constructor(img: HTMLImageElement, height: number, characters: Characters) {
     this.img = img;
-    this.chW = characterWidth;
-    this.chH = characterHeight;
+    this.height = height;
     this.chs = characters;
   }
 
-  static async load(fontPath: string, [characterWidth, characterHeight]: [number, number]) {
-    const fontSpecReq = await fetch(`${fontPath}.txt`);
-    const fontSpec = await fontSpecReq.text();
+  static async load(fontPath: string) {
+    const fontSpecTxt = await fetch(`${fontPath}`);
+    const fontSpec: FontSpec = await fontSpecTxt.json();
+    // could check if fontSpec is actualy FontSpec but CBA
 
-    const img = await loadImage(fontPath);
-
-    const characters = [...fontSpec].reduce((d, ch, idx) => (
-      ch.trim().length == 0 ? d : {
-        ...d,
-        [ch]: (idx - 0) * (characterWidth + 1)
-      }
-    ), {})
-
-    return new Font(img, [characterWidth, characterHeight], characters)
+    const img = await loadImage(fontSpec.image);
+    return new Font(img, fontSpec.height, fontSpec.characters)
   }
 
-  drawCharacter(ctx: CanvasRenderingContext2D, [x, y]: [number, number], ch: string, ignoreUnknown: boolean = false) {
-    const charX = this.chs[ch] || this.chs[ch.toUpperCase()];
-    if (charX == null) {
-      if (ignoreUnknown || ch == ' ') return;
+  drawCharacter(ctx: CanvasRenderingContext2D, [x, y]: [number, number], ch: string, ignoreUnknown: boolean = false): number {
+    const chSpec = this.chs[ch] || this.chs[ch.toUpperCase()];
+    if (chSpec == null) {
+      if (ignoreUnknown || ch == ' ') return 5;
       throw Error(`unknown character: ${ch}`);
     };
 
-    ctx.drawImage(this.img, charX, 0, this.chW, this.chH, x, y, this.chW, this.chH);
+    ctx.drawImage(this.img, chSpec.x, 0, chSpec.w, this.height, x, y, chSpec.w, this.height);
+    return chSpec.w
   }
 
   drawLine(ctx: CanvasRenderingContext2D, [x, y]: [number, number], line: string, ignoreUnknown: boolean = false) {
-    const yy = y * this.chH;
-    [...line].forEach((ch, idx) => {
-      this.drawCharacter(ctx, [(x + idx) * this.chW, yy], ch, ignoreUnknown);
+    const yy = y * this.height;
+    [...line].forEach(ch => {
+      x += this.drawCharacter(ctx, [x, yy], ch, ignoreUnknown);
     })
   }
 

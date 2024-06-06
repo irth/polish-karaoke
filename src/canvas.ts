@@ -13,7 +13,7 @@ export function createCanvas([width, height]: [number, number]): [HTMLCanvasElem
 }
 
 export function createAreaCanvas(a: Area): [HTMLCanvasElement, CanvasRenderingContext2D] {
-  const s: [number, number] = [a.size[0] * a.characterSize[0], a.size[1] * a.characterSize[1]]
+  const s: [number, number] = [a.size[0], a.size[1]]
   const [c, ctx] = createCanvas(s);
   ctx.fillStyle = "white"
   ctx.fillRect(0, 0, ...s);

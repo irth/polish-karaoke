@@ -8,10 +8,14 @@ export type Background = {
 export type Area = {
   start: [number, number];
   size: [number, number];
-  characterSize: [number, number];
   pxSpacing: [number, number];
   pxSize: number;
-  characterSpacing: [number, number];
+
+  cluster?: {
+    size: [number, number],
+    spacing: [number, number],
+  }
+
   font: string;
   on: string;
   off: string;
@@ -19,7 +23,6 @@ export type Area = {
 
 type Params = {
   image: string;
-  size: [number, number];
 
   renderArea: [number, number];
 
