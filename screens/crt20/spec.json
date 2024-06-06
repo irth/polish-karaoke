@@ -1,0 +1,142 @@
+{
+  "image": "base.png",
+  "renderArea": [
+    640,
+    480
+  ],
+  "colors": {
+    "bg": "#1F110C",
+    "line": "#2E0B03"
+  },
+  "drawArea": {
+    "topLeft": [
+      276,
+      172
+    ],
+    "topRight": [
+      880,
+      189
+    ],
+    "bottomRight": [
+      893,
+      620
+    ],
+    "bottomLeft": [
+      276,
+      613
+    ]
+  },
+  "background": [
+    {
+      "box": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "color": "bg"
+    },
+    {
+      "box": [
+        0,
+        16,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        74,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        132,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        190,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        248,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        306,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        364,
+        640,
+        44
+      ],
+      "color": "line"
+    },
+    {
+      "box": [
+        0,
+        422,
+        640,
+        44
+      ],
+      "color": "line"
+    }
+  ],
+  "areas": {
+    "lines": {
+      "start": [
+        4.5,
+        18
+      ],
+      "size": [
+        100,
+        64
+      ],
+      "cluster": {
+        "size": [
+          5,
+          8
+        ],
+        "spacing": [
+          9,
+          18
+        ]
+      },
+      "pxSpacing": [
+        4.6,
+        5
+      ],
+      "pxSize": 4.6,
+      "font": "font",
+      "on": "#EAB777",
+      "off": "#441F1C"
+    }
+  }
+}

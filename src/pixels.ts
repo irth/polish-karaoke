@@ -1,20 +1,29 @@
-import { Area, Background } from "./params";
+import Params, { Area } from "./params";
 
-export function drawBackgrounds(ctx: CanvasRenderingContext2D, backgrounds: Background[]) {
-  backgrounds.forEach(bg => {
-    ctx.fillStyle = bg.color;
+function getColor(params: Params, color: string): string {
+  let colorMap = params.colors ?? {};
+  return colorMap[color] ?? color;
+}
+
+export function drawBackgrounds(ctx: CanvasRenderingContext2D, params: Params) {
+  params.background.forEach(bg => {
+    ctx.fillStyle = getColor(params, bg.color);
     console.log("bg", bg)
     ctx.fillRect(...bg.box);
   })
 }
 
-export function drawArea(ctx: CanvasRenderingContext2D, area: Area, getValue: (pos: [number, number]) => boolean) {
-  let [X, Y] = area.start;
-  let [width, height] = area.size;
+export function drawArea(ctx: CanvasRenderingContext2D, params: Params, area: Area, getValue: (pos: [number, number]) => boolean) {
+  const [X, Y] = area.start;
+  const [width, height] = area.size;
   let [x, y] = [X, Y];
+
+  const colorOn = getColor(params, area.on);
+  const colorOff = getColor(params, area.off);
+
   for (let vy = 0; vy < height; vy++) {
     for (let vx = 0; vx < width; vx++) {
-      ctx.fillStyle = getValue([vx, vy]) ? area.on : area.off;
+      ctx.fillStyle = getValue([vx, vy]) ? colorOn : colorOff;
       ctx.beginPath();
       ctx.arc(x + area.pxSize / 2, y + area.pxSize / 2, area.pxSize / 2, 0, 2 * Math.PI);
       ctx.fill();

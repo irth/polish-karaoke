@@ -1,0 +1,68 @@
+{
+  "image": "base.png",
+  "renderArea": [
+    640,
+    412
+  ],
+  "colors": {
+    "bg": "#21201d"
+  },
+  "drawArea": {
+    "topLeft": [
+      384,
+      163
+    ],
+    "topRight": [
+      921,
+      23
+    ],
+    "bottomRight": [
+      965,
+      388
+    ],
+    "bottomLeft": [
+      381,
+      508
+    ]
+  },
+  "background": [
+    {
+      "box": [
+        0,
+        0,
+        640,
+        87
+      ],
+      "color": "bg"
+    },
+    {
+      "box": [
+        0,
+        127,
+        640,
+        285
+      ],
+      "color": "bg"
+    }
+  ],
+  "areas": {
+    "rozklad": {
+      "start": [
+        4,
+        127
+      ],
+      "size": [
+        144,
+        65
+      ],
+      "pxSpacing": [
+        4.4,
+        4.4
+      ],
+      "pxSize": 3.5,
+      "font": "rozklad",
+      "on": "#f0973a",
+      "off": "#31302d"
+    }
+  }
+}

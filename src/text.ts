@@ -20,12 +20,12 @@ export class Font {
     this.chs = characters;
   }
 
-  static async load(fontPath: string) {
-    const fontSpecTxt = await fetch(`${fontPath}`);
+  static async load(base: string, name: string) {
+    const fontSpecTxt = await fetch(`${base}/${name}.json`);
     const fontSpec: FontSpec = await fontSpecTxt.json();
     // could check if fontSpec is actualy FontSpec but CBA
 
-    const img = await loadImage(fontSpec.image);
+    const img = await loadImage(`${base}/${fontSpec.image}`);
     return new Font(img, fontSpec.height, fontSpec.characters)
   }
 

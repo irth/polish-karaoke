@@ -14,7 +14,7 @@ export type Area = {
   cluster?: {
     size: [number, number],
     spacing: [number, number],
-  }
+  };
 
   font: string;
   on: string;
@@ -22,6 +22,8 @@ export type Area = {
 };
 
 type Params = {
+  _base: string;
+
   image: string;
 
   renderArea: [number, number];
@@ -29,6 +31,10 @@ type Params = {
   drawArea: Quadrilateral;
 
   background: Background[];
+
+  colors?: {
+    [name: string]: string;
+  };
 
   areas: {
     [key: string]: Area;
