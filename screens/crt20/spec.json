@@ -8,7 +8,7 @@
     "bg": "#1F110C",
     "line": "#2E0B03"
   },
-  "drawArea": {
+  "perspective": {
     "topLeft": [
       276,
       172
@@ -134,7 +134,19 @@
         5
       ],
       "pxSize": 4.6,
-      "font": "font",
+      "text": {
+        "song": {
+          "start": [
+            0,
+            0
+          ],
+          "size": [
+            100,
+            64
+          ],
+          "font": "font"
+        }
+      },
       "on": "#EAB777",
       "off": "#441F1C"
     }

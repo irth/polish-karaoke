@@ -7,7 +7,7 @@
   "colors": {
     "bg": "#21201d"
   },
-  "drawArea": {
+  "perspective": {
     "topLeft": [
       384,
       163
@@ -59,8 +59,54 @@
         4.4,
         4.4
       ],
-      "pxSize": 3.5,
-      "font": "rozklad",
+      "pxSize": 4.5,
+      "text": {
+        "linia": {
+          "align": "right",
+          "start": [
+            0,
+            0
+          ],
+          "size": [
+            17,
+            65
+          ],
+          "font": "rozklad"
+        },
+        "kierunek": {
+          "start": [
+            20,
+            0
+          ],
+          "size": [
+            98,
+            65
+          ],
+          "font": "rozklad"
+        },
+        "odjazd": {
+          "start": [
+            118,
+            0
+          ],
+          "size": [
+            25,
+            65
+          ],
+          "font": "rozklad"
+        },
+        "info": {
+          "start": [
+            0,
+            55
+          ],
+          "size": [
+            144,
+            11
+          ],
+          "font": "rozklad"
+        }
+      },
       "on": "#f0973a",
       "off": "#31302d"
     }

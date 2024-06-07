@@ -29,18 +29,45 @@ export class Font {
     return new Font(img, fontSpec.height, fontSpec.characters)
   }
 
-  drawCharacter(ctx: CanvasRenderingContext2D, [x, y]: [number, number], ch: string, ignoreUnknown: boolean = false): number {
+  getCharacter(ch: string): CharacterSpec | null {
     const chSpec = this.chs[ch] || this.chs[ch.toUpperCase()];
+    return chSpec;
+  }
+
+  getCharacterOffset(ch: string) {
+    const chSpec = this.getCharacter(ch) ?? { w: 5 };
+    return chSpec.w;
+  }
+
+  drawCharacter(ctx: CanvasRenderingContext2D, [x, y]: [number, number], ch: string, ignoreUnknown: boolean = false): number {
+    const chSpec = this.getCharacter(ch);
+    const offset = this.getCharacterOffset(ch);
     if (chSpec == null) {
-      if (ignoreUnknown || ch == ' ') return 5;
+      if (ignoreUnknown || ch == ' ') return offset;
       throw Error(`unknown character: ${ch}`);
     };
 
     ctx.drawImage(this.img, chSpec.x, 0, chSpec.w, this.height, x, y, chSpec.w, this.height);
-    return chSpec.w
+    return offset;
   }
 
-  drawLine(ctx: CanvasRenderingContext2D, [x, y]: [number, number], line: string, ignoreUnknown: boolean = false) {
+
+  drawLine(ctx: CanvasRenderingContext2D, [x, y]: [number, number], line: string, ignoreUnknown: boolean = false, align: 'left' | 'center' | 'right' = 'left', containerWidth?: number) {
+    if (align != 'left') {
+      if (containerWidth == null) {
+        throw Error("can't align text without known containerWidth");
+      }
+
+      const lineWidth = [...line].reduce((prev, cur) => prev + this.getCharacterOffset(cur), 0);
+
+      if (align == 'center') {
+        x += Math.floor((containerWidth - lineWidth) / 2);
+      } else if (align == 'right') {
+        x += containerWidth - lineWidth;
+      }
+    }
+
+
     const yy = y * this.height;
     [...line].forEach(ch => {
       x += this.drawCharacter(ctx, [x, yy], ch, ignoreUnknown);
@@ -48,9 +75,9 @@ export class Font {
   }
 
 
-  drawLines(ctx: CanvasRenderingContext2D, [x, y]: [number, number], lines: string[], ignoreUnknown: boolean = false) {
+  drawLines(ctx: CanvasRenderingContext2D, [x, y]: [number, number], lines: string[], ignoreUnknown: boolean = false, align: 'left' | 'center' | 'right' = 'left', containerWidth?: number) {
     lines.forEach((line, lineIdx) => {
-      this.drawLine(ctx, [x, y + lineIdx], line, ignoreUnknown)
+      this.drawLine(ctx, [x, y + lineIdx], line, ignoreUnknown, align, containerWidth)
     })
   }
 }

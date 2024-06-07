@@ -1,4 +1,4 @@
-import { Area } from "./params";
+import { DrawingArea, TextArea } from "./params";
 
 export function createCanvas([width, height]: [number, number]): [HTMLCanvasElement, CanvasRenderingContext2D] {
   const canvas = document.createElement('canvas');
@@ -12,8 +12,8 @@ export function createCanvas([width, height]: [number, number]): [HTMLCanvasElem
   return [canvas, ctx];
 }
 
-export function createAreaCanvas(a: Area): [HTMLCanvasElement, CanvasRenderingContext2D] {
-  const s: [number, number] = [a.size[0], a.size[1]]
+export function createAreaCanvas(a: DrawingArea | TextArea): [HTMLCanvasElement, CanvasRenderingContext2D] {
+  const s = a.size;
   const [c, ctx] = createCanvas(s);
   ctx.fillStyle = "white"
   ctx.fillRect(0, 0, ...s);

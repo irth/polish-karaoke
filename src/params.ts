@@ -5,7 +5,7 @@ export type Background = {
   color: string;
 };
 
-export type Area = {
+export type DrawingArea = {
   start: [number, number];
   size: [number, number];
   pxSpacing: [number, number];
@@ -16,10 +16,19 @@ export type Area = {
     spacing: [number, number],
   };
 
-  font: string;
+  text: { [key: string]: TextArea; }
+
   on: string;
   off: string;
 };
+
+export type TextArea = {
+  start: [number, number];
+  size: [number, number];
+  align?: 'left' | 'center' | 'right';
+  drawingArea: string;
+  font: string;
+}
 
 type Params = {
   _base: string;
@@ -28,7 +37,7 @@ type Params = {
 
   renderArea: [number, number];
 
-  drawArea: Quadrilateral;
+  perspective: Quadrilateral;
 
   background: Background[];
 
@@ -37,7 +46,7 @@ type Params = {
   };
 
   areas: {
-    [key: string]: Area;
+    [key: string]: DrawingArea;
   };
 }
 

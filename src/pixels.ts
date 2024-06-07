@@ -1,4 +1,4 @@
-import Params, { Area } from "./params";
+import Params, { DrawingArea } from "./params";
 
 function getColor(params: Params, color: string): string {
   let colorMap = params.colors ?? {};
@@ -13,7 +13,7 @@ export function drawBackgrounds(ctx: CanvasRenderingContext2D, params: Params) {
   })
 }
 
-export function drawArea(ctx: CanvasRenderingContext2D, params: Params, area: Area, getValue: (pos: [number, number]) => boolean) {
+export function drawArea(ctx: CanvasRenderingContext2D, params: Params, area: DrawingArea, getValue: (pos: [number, number]) => boolean) {
   const [X, Y] = area.start;
   const [width, height] = area.size;
   let [x, y] = [X, Y];
